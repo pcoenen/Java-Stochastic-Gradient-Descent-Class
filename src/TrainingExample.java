@@ -1,25 +1,25 @@
 
 
-public class TrainingExample {
-	public TrainingExample(String X, String Y){
+public class TrainingExample<I, O> {
+	public TrainingExample(I X, O Y){
 		setX(X);
 		setY(Y);
 	}
-	public String getX() {
+	public I getX() {
 		return X;
 	}
-	private void setX(String x) {
+	private void setX(I x) {
 		X = x;
 	}
-	private String X;
+	private I X;
 	
-	public String getY() {
+	public O getY() {
 		return Y;
 	}
-	private void setY(String y) {
+	private void setY(O y) {
 		Y = y;
 	}
 	
-	private String Y;
+	private O Y;
 
 }

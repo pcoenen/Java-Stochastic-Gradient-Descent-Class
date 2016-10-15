@@ -1,6 +1,5 @@
-import java.util.ArrayList;
 import java.util.HashMap;
 
-public interface Phi {
-	public HashMap<ArrayList<String>, Float> getScore(String x, String y);
+public interface Phi<I, M, O> {
+	public HashMap<M, Float> getScore(I x, O y);
 }

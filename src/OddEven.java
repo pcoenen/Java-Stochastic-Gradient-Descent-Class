@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class OddEven implements Phi {
+public class OddEven implements Phi<String, ArrayList<String>, String> {
 
 	@Override
 	public HashMap<ArrayList<String>, Float> getScore(String x, String y) {
