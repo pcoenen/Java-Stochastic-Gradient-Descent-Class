@@ -1,6 +1,6 @@
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map.Entry;
 import java.util.Random;
 
@@ -19,7 +19,7 @@ public class SGD<I, M, O> {
 		this.setPossibleValues(possibleValues);
 	}
 	
-	public HashMap<M, Float> run(ArrayList<TrainingExample<I, O>> examples, int T, float eta){
+	public HashMap<M, Float> run(List<TrainingExample<I, O>> examples, int T, float eta){
 		HashMap<M, Float> w = this.getW();
 		for(int i = 0; i < T; i++){
 			// random shuffle

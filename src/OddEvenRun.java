@@ -11,8 +11,13 @@ public class OddEvenRun {
 		ArrayList<TrainingExample<String,String>> list = new ArrayList<>();
 		list.add(new TrainingExample<String,String>("five", "Oneven"));
 		list.add(new TrainingExample<String,String>("thirty one", "Oneven"));
+		list.add(new TrainingExample<String,String>("forty nine", "Oneven"));
+		list.add(new TrainingExample<String,String>("fifty two", "Even"));
+		list.add(new TrainingExample<String,String>("eighty three", "Oneven"));
+		list.add(new TrainingExample<String,String>("eighty four", "Even"));
+		list.add(new TrainingExample<String,String>("eighty six", "Even"));
 		HashMap<ArrayList<String>, Float> result = sgd.run(list, 10, (float) 0.1);
-		System.out.println(result.toString());
+		//System.out.println(result.toString());
 		Scanner reader = new Scanner(System.in);  // Reading from System.in
 		System.out.println("Enter a number: ");
 		while(reader.hasNextLine()){
