@@ -6,19 +6,49 @@ import java.util.Random;
 
 /**
 * Generic Java Class for Stochastic Gradient Descent Algorithm
+* 
+* Needs as input a class that implements the interface Phi.java
+* 
+* To train the algorithm you need to input a list of Training Examples
 *
 * @author  Coenen Pieter-Jan
 * @version 1.1
 * @since   2016-10-16
 */
 
+/**
+ * 
+ * @author piete_000
+ *
+ * @param <I> The type of input, probably String
+ * @param <M> The type in which the algorithm needs to save the values for w
+ * @param <O> The type of the output, probably String
+ */
 public class SGD<I, M, O> {
 	
+	/**
+	 * 
+	 * @param 	phi 	
+	 * 			A class that implements the the interface Phi.java, needed to calculate the score
+	 * @param 	possibleValues
+	 * 			An array which contains all possible values for the output
+	 */
 	public SGD(Phi<I, M, O> phi, O[] possibleValues){
 		this.setPhi(phi);
 		this.setPossibleValues(possibleValues);
 	}
 	
+	/**
+	 * 
+	 * @param 	examples
+	 * 			A list of TraingExamples which contain the data to train the algorithm
+	 * @param 	T
+	 * 			An integer value that says how many times the algorithm needs to iterate
+	 * @param 	eta
+	 * 			The value eta
+	 * @return	The function returns the variable W that contains a HashMap with the values	
+	 * 				for the trained data which can be used for further training or prediction
+	 */
 	public HashMap<M, Float> run(List<TrainingExample<I, O>> examples, int T, float eta){
 		HashMap<M, Float> w = this.getW();
 		for(int i = 0; i < T; i++){
@@ -55,6 +85,12 @@ public class SGD<I, M, O> {
 		}
 	}
 	
+	/**
+	 * 
+	 * @param 	data
+	 * 			The data for which the answer needs to be predicted.
+	 * @return	It returns one of the output values that fits best for this input
+	 */
 	public O predict(I data){
 		HashMap<M, Float> w = this.getW();
 		Entry<Tuple<I, O>, Float> y_tilde = this.getMaxScore(w, data);
