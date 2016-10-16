@@ -25,6 +25,7 @@ public class OddEvenRun {
 			System.out.println(sgd.predict(value));
 			System.out.println("Enter a number: ");
 		}
+		reader.close();
 	}
 
 }

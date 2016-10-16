@@ -1,25 +1,40 @@
 
 
 public class TrainingExample<I, O> {
-	public TrainingExample(I X, O Y){
-		setX(X);
-		setY(Y);
+	/**
+	 * 
+	 * @param 	inputData
+	 * 			The input for which you want to train.
+	 * @param 	correctOutput
+	 * 			The correct output for the given input.
+	 */
+	public TrainingExample(I inputData, O correctOutput){
+		setInputData(inputData);
+		setCorrectOutput(correctOutput);
 	}
-	public I getX() {
-		return X;
+	/**
+	 * 
+	 * @return the input for this trainingsexample
+	 */
+	public I getInputData() {
+		return inputData;
 	}
-	private void setX(I x) {
-		X = x;
+	private void setInputData(I inputData) {
+		this.inputData = inputData;
 	}
-	private I X;
+	private I inputData;
 	
-	public O getY() {
-		return Y;
+	/**
+	 * 
+	 * @return the correct output for this trainingsexample
+	 */
+	public O getCorrectOutput() {
+		return correctOutput;
 	}
-	private void setY(O y) {
-		Y = y;
+	private void setCorrectOutput(O correctOutput) {
+		this.correctOutput = correctOutput;
 	}
 	
-	private O Y;
+	private O correctOutput;
 
 }

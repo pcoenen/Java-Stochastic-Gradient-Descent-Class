@@ -56,7 +56,7 @@ public class SGD<I, M, O> {
 			long seed = System.nanoTime();
 			Collections.shuffle(examples, new Random(seed));
 			for(TrainingExample<I, O> example : examples){
-				Entry<Tuple<I, O>, Float> y_tilde = this.getMaxScore(w, example.getX(), example.getY());
+				Entry<Tuple<I, O>, Float> y_tilde = this.getMaxScore(w, example.getInputData(), example.getCorrectOutput());
 				updateW(eta, w, example, y_tilde);	
 			}
 		}
@@ -65,8 +65,8 @@ public class SGD<I, M, O> {
 	
 	private void updateW(float eta, HashMap<M, Float> w, TrainingExample<I, O> example,
 			Entry<Tuple<I, O>, Float> y_tilde) {
-		HashMap<M,Float> phi_y_tilde = phi.getScore(example.getX(), y_tilde.getKey().gety());
-		HashMap<M,Float> phi_y = phi.getScore(example.getX(), example.getY());
+		HashMap<M,Float> phi_y_tilde = phi.getScore(example.getInputData(), y_tilde.getKey().gety());
+		HashMap<M,Float> phi_y = phi.getScore(example.getInputData(), example.getCorrectOutput());
 		for(Entry<M, Float> entry : phi_y_tilde.entrySet()){
 			float actualValue = 0;
 			if(phi_y.containsKey(entry.getKey())){
