@@ -1,10 +1,11 @@
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
-public class PhiOddEven implements Phi<String, ArrayList<String>, String> {
+public class OddEven_SGDHelper implements SGD_helper<String, ArrayList<String>, String> {
 
 	@Override
-	public HashMap<ArrayList<String>, Float> getScore(String x, String y) {
+	public HashMap<ArrayList<String>, Float> Phi(String x, String y) {
 		HashMap<ArrayList<String>, Float> map = new HashMap<>();
 		ArrayList<String> lastElement = new ArrayList<>();
 		lastElement.add(y);
@@ -14,6 +15,14 @@ public class PhiOddEven implements Phi<String, ArrayList<String>, String> {
 		stringY.add(y);
 		map.put(stringY, (float) 1);
 		return map;
+	}
+
+	@Override
+	public List<String> getPossibleOutputs(String x) {
+		ArrayList<String> list = new ArrayList<>();
+		list.add("Even");
+		list.add("Oneven");
+		return list;
 	}
 	
 	

@@ -18,8 +18,6 @@ import java.util.Random;
 
 /**
  * 
- * @author piete_000
- *
  * @param <I> The type of input, probably String
  * @param <M> The type in which the algorithm needs to save the values for w
  * @param <O> The type of the output, probably String
@@ -28,14 +26,13 @@ public class SGD<I, M, O> {
 	
 	/**
 	 * 
-	 * @param 	phi 	
+	 * @param 	helper 	
 	 * 			A class that implements the the interface Phi.java, needed to calculate the score
 	 * @param 	possibleValues
 	 * 			An array which contains all possible values for the output
 	 */
-	public SGD(Phi<I, M, O> phi, O[] possibleValues){
-		this.setPhi(phi);
-		this.setPossibleValues(possibleValues);
+	public SGD(SGD_helper<I, M, O> helper){
+		this.setSGDHelper(helper);
 	}
 	
 	/**
@@ -65,8 +62,8 @@ public class SGD<I, M, O> {
 	
 	private void updateW(float eta, HashMap<M, Float> w, TrainingExample<I, O> example,
 			Entry<Tuple<I, O>, Float> y_tilde) {
-		HashMap<M,Float> phi_y_tilde = phi.getScore(example.getInputData(), y_tilde.getKey().gety());
-		HashMap<M,Float> phi_y = phi.getScore(example.getInputData(), example.getCorrectOutput());
+		HashMap<M,Float> phi_y_tilde = helper.Phi(example.getInputData(), y_tilde.getKey().gety());
+		HashMap<M,Float> phi_y = helper.Phi(example.getInputData(), example.getCorrectOutput());
 		for(Entry<M, Float> entry : phi_y_tilde.entrySet()){
 			float actualValue = 0;
 			if(phi_y.containsKey(entry.getKey())){
@@ -108,9 +105,9 @@ public class SGD<I, M, O> {
 	}
 	
 	private float score(HashMap<M, Float> w, O Y_accent, I X){
-		Phi<I, M, O> phi = this.getPhi();
+		SGD_helper<I, M, O> helper = this.getSGDHelper();
 		float score = 0;
-		HashMap<M, Float> phi_value = phi.getScore(X, Y_accent);
+		HashMap<M, Float> phi_value = helper.Phi(X, Y_accent);
 		for(Entry<M, Float> entry : phi_value.entrySet()){
 			this.prepareW(w, entry.getKey());
 			score += w.get(entry.getKey()) * entry.getValue();
@@ -134,7 +131,7 @@ public class SGD<I, M, O> {
 	
 	private HashMap<Tuple<I, O>, Float> getAllScores(HashMap<M, Float> w, I x, O y){
 		HashMap<Tuple<I, O>, Float> result = new HashMap<>();
-		for(O y_accent : getPossibleValues()){
+		for(O y_accent : getPossibleValues(x)){
 			Tuple<I, O> tuple = new Tuple<I, O>(x, y_accent);
 			result.put(tuple, totalScore(w, y_accent, x, y));
 		}
@@ -158,14 +155,10 @@ public class SGD<I, M, O> {
 		return getMaxScore(w, x, null);
 	}
 	
-	private O[] getPossibleValues() {
-		return possibleValues;
+	private List<O> getPossibleValues(I x) {
+		SGD_helper<I, M, O> helper = this.getSGDHelper();
+		return helper.getPossibleOutputs(x);
 	}
-	private void setPossibleValues(O[] possibleValues) {
-		this.possibleValues = possibleValues;
-	}
-	
-	private O[] possibleValues;
 	
 	private HashMap<M, Float> getW() {
 		return this.w;
@@ -173,12 +166,12 @@ public class SGD<I, M, O> {
 
 	private HashMap<M, Float> w = new HashMap<>();
 	
-	private Phi<I, M, O> getPhi() {
-		return phi;
+	private SGD_helper<I, M, O> getSGDHelper() {
+		return helper;
 	}
-	private void setPhi(Phi<I, M, O> phi) {
-		this.phi = phi;
+	private void setSGDHelper(SGD_helper<I, M, O> helper) {
+		this.helper = helper;
 	}
 	
-	private Phi<I, M, O> phi;
+	private SGD_helper<I, M, O> helper;
 }
