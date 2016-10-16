@@ -4,6 +4,14 @@ import java.util.HashMap;
 import java.util.Map.Entry;
 import java.util.Random;
 
+/**
+* Generic Java Class for Stochastic Gradient Descent Algorithm
+*
+* @author  Coenen Pieter-Jan
+* @version 1.1
+* @since   2016-10-16
+*/
+
 public class SGD<I, M, O> {
 	
 	public SGD(Phi<I, M, O> phi, O[] possibleValues){
