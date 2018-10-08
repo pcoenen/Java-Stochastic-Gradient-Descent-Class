@@ -141,14 +141,19 @@ public class SGD<I, M, O> {
 	private Entry<Tuple<I, O>, Float> getMaxScore(HashMap<M, Float> w, I x, O y){
 		HashMap<Tuple<I, O>, Float> allScores =  getAllScores(w, x, y);
 		float max = Float.NEGATIVE_INFINITY;
-		Entry<Tuple<I, O>, Float> biggest = null;
+		List<Entry<Tuple<I, O>, Float>> biggest = new ArrayList<>();
 		for(Entry<Tuple<I, O>, Float> entry : allScores.entrySet()){
-			if(entry.getValue() > max){
+			if(Math.abs(entry.getValue() - max) < 0.0001){
+				biggest.add(entry);
+			} else if(entry.getValue() > max){
 				max = entry.getValue();
-				biggest = entry;
+				biggest = new ArrayList<>();
+				biggest.add(entry);
 			}
 		}
-		return biggest;
+		long seed = System.nanoTime();
+		Collections.shuffle(biggest, new Random(seed));		
+		return biggest.get(0);
 	}
 	
 	private Entry<Tuple<I, O>, Float> getMaxScore(HashMap<M, Float> w, I x){
